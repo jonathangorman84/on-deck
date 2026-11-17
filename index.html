@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--
+    Display name: "On Deck" (the logo text). To use the Apps Script title
+    "Port App" instead, change the title / application-name /
+    apple-mobile-web-app-title values in this file and name + short_name in
+    manifest.webmanifest (one conceptual change, those two files).
+  -->
+  <title>On Deck</title>
+  <meta name="application-name" content="On Deck">
+  <meta name="apple-mobile-web-app-title" content="On Deck">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000941">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" href="favicon.ico">
+  <style>
+    :root { --navy: #000941; --foam: #e8eef8; }
+    html, body { margin: 0; height: 100%; background: var(--navy); color: var(--foam); font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+    body { min-height: 100vh; min-height: 100dvh; }
+    #app {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      border: 0; background: var(--navy);
+    }
+    #fallback {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: .6rem 1rem;
+      padding: .55rem 1rem calc(.55rem + env(safe-area-inset-bottom, 0px));
+      background: rgba(0, 9, 65, .92);
+      border-top: 1px solid #ffffff22;
+      font-size: .9rem;
+      z-index: 2;
+    }
+    #fallback a {
+      color: #fff; background: #1d4e89; text-decoration: none;
+      font-weight: 700; padding: .45rem .9rem; border-radius: 999px;
+    }
+    #fallback a:hover { background: #2a62a8; }
+    #fallback p { margin: 0; color: #c5d0e8; }
+    /* Standalone home-screen: hide the chrome so the iframe is full-screen. */
+    @media (display-mode: standalone) {
+      #fallback { display: none; }
+    }
+    body.standalone #fallback { display: none; }
+    noscript .only-script { display: none; }
+    .noscript-open { padding: 2rem; text-align: center; }
+    .noscript-open img { width: 96px; height: 96px; border-radius: 20px; }
+    .noscript-open a { color: #fff; }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div class="noscript-open">
+      <p><img src="icons/icon-192.png" alt="On Deck" width="96" height="96"></p>
+      <p><a href="https://script.google.com/macros/s/AKfycbxvH7ubF1E9pv8o1IMb7VoCzL1nYGEJ3LBQp_FJi7JvoTJVOwmvwEC-a-HjevjDsQAO/exec">Open On Deck</a></p>
+    </div>
+  </noscript>
+  <iframe
+    id="app"
+    title="On Deck"
+    src="https://script.google.com/macros/s/AKfycbxvH7ubF1E9pv8o1IMb7VoCzL1nYGEJ3LBQp_FJi7JvoTJVOwmvwEC-a-HjevjDsQAO/exec"
+    allow="fullscreen"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <div id="fallback">
+    <p class="only-script">If the schedule doesn’t appear, open it directly.</p>
+    <a id="openDirect" href="https://script.google.com/macros/s/AKfycbxvH7ubF1E9pv8o1IMb7VoCzL1nYGEJ3LBQp_FJi7JvoTJVOwmvwEC-a-HjevjDsQAO/exec" target="_blank" rel="noopener">Open On Deck</a>
+  </div>
+  <script>
+    (function () {
+      if (window.navigator.standalone) document.body.classList.add('standalone');
+    })();
+  </script>
+</body>
+</html>
