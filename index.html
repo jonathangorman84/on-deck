@@ -56,9 +56,20 @@
     .noscript-open { padding: 2rem; text-align: center; }
     .noscript-open img { width: 96px; height: 96px; border-radius: 20px; }
     .noscript-open a { color: #fff; }
+    #splash {
+      position: fixed; inset: 0; z-index: 5;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem;
+      background: var(--navy);
+      transition: opacity .45s ease;
+    }
+    #splash img { width: 168px; height: 168px; border-radius: 38px; box-shadow: 0 10px 40px #0008; animation: pulse 1.8s ease-in-out infinite; }
+    #splash p { margin: 0; color: #c5d0e8; font-size: .95rem; letter-spacing: .04em; }
+    #splash.hide { opacity: 0; pointer-events: none; }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
   </style>
 </head>
 <body>
+  <div id="splash"><img src="icons/icon-512-rounded.png" alt="On Deck"><p>Loading schedule…</p></div>
   <noscript>
     <div class="noscript-open">
       <p><img src="icons/icon-192.png" alt="On Deck" width="96" height="96"></p>
@@ -78,6 +89,17 @@
   <script>
     (function () {
       if (window.navigator.standalone) document.body.classList.add('standalone');
+      var splash = document.getElementById('splash'), app = document.getElementById('app'), t0 = Date.now(), done = false;
+      function hide() {
+        if (done) return; done = true;
+        splash.classList.add('hide');
+        setTimeout(function () { splash.style.display = 'none'; }, 500);
+      }
+      app.addEventListener('load', function () {
+        // Apps Script loads the real page in a nested frame after this fires; give it a moment.
+        setTimeout(hide, Math.max(1200, 1800 - (Date.now() - t0)));
+      });
+      setTimeout(hide, 12000);
     })();
   </script>
 </body>
